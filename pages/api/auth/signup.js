@@ -23,12 +23,10 @@ export default async function handler(req, res) {
     !password ||
     password.trim().length < 7
   ) {
-    res
-      .status(422)
-      .json({
-        message:
-          "Invalid input - password should also be at least 7 characters long.",
-      });
+    res.status(422).json({
+      message:
+        "Invalid input - password should also be at least 7 characters long.",
+    });
     return;
   }
 
@@ -44,6 +42,14 @@ export default async function handler(req, res) {
   }
 
   const db = client.db();
+
+  // verifier si l'utilisateur existe deja
+  const existingUser = await db.collection("users").findOne({ email: email });
+
+  if (existingUser) {
+    res.status(422).json({ message: "User exists already!" });
+    return;
+  }
 
   // il n'est pas securitaire de sauvegarder les mots de passe en clair dans la base de donnees sans les encrypter. pour les encrypter, nous utiliserons le package bcryptjs (npm install bcryptjs)
   let hashedPassword;
