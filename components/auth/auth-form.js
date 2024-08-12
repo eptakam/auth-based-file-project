@@ -1,3 +1,10 @@
+/*
+    nous avons installer next-auth (npm install next-auth) pour gérer l'authentification. next-auth est une bibliothèque open source qui fournit une solution d'authentification simple et facile à utiliser pour les applications Next.js. Il prend en charge plusieurs fournisseurs d'authentification, tels que Google, Facebook, GitHub, etc.
+
+    il possede a la fois des capacites cote client et cote serveur. Il gere les sessions utilisateur, les jetons d'acces (tokens) et de rafraichissement, les redirections, etc.
+*/
+
+
 import { useState } from 'react';
 import classes from './auth-form.module.css';
 
