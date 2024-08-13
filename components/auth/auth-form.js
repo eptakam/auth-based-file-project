@@ -5,13 +5,16 @@
 */
 
 import { useState, useRef } from "react";
+// import { signIn } from 'next-auth/client';  // ne marche pas
+import { signIn } from "next-auth/react";
+
 import classes from "./auth-form.module.css";
 
 async function createUser(email, password) {
   try {
     // send a request to API route
-    const response = await fetch('/api/auth/signup', {
-      method: 'POST',
+    const response = await fetch("/api/auth/signup", {
+      method: "POST",
       body: JSON.stringify({ email, password }),
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +29,7 @@ async function createUser(email, password) {
 
     return data;
   } catch (error) {
-    // console.error("Error during user creation:", error);
+    console.error("Error during user creation:");
     throw error;
   }
 }
@@ -54,6 +57,17 @@ export default function AuthForm() {
 
     if (isLogin) {
       // log user in
+      // appeler la fonctione signIn de next-auth pour envoyer une requete de connexion a la route /api/auth/signin
+      // le premier arg de cette fct est le type de connexion (credentials) et le deuxieme arg est un objet qui contient les donnees du formulaire (configuration de connexion)
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: enteredEmail,
+        password: enteredPassword,
+      });
+
+      if (!result.error) {
+        // set some auth state
+      }
     } else {
       // create new user
       try {

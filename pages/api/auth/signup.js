@@ -48,6 +48,7 @@ export default async function handler(req, res) {
 
   if (existingUser) {
     res.status(422).json({ message: "User exists already!" });
+    client.close();
     return;
   }
 
@@ -65,11 +66,12 @@ export default async function handler(req, res) {
   // creer une nouvelle collection (table) pour les utilisateurs
   try {
     const result = await db.collection("users").insertOne({
-      email,
+      email: email,
       password: hashedPassword,
     });
     console.log("User created:", result);
     res.status(201).json({ message: "Created user!" });
+    client.close();
   } catch (error) {
     console.error("Creating the user failed:", error);
     res.status(500).json({ message: "Creating the user failed!" });

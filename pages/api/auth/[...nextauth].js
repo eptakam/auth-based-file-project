@@ -8,9 +8,11 @@
     pour plus d'informations sur les routes qui peuvent etre implementees dans ce fichier, consulter la documentation officielle de next-auth: https://next-auth.js.org/getting-started/rest-api
 */
 
-import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+import NextAuth from 'next-auth';  
+// import Provider  from 'next-auth/providers'; // ne marche pas
+import CredentialsProviders from 'next-auth/providers/credentials';
 import { verifyPassword } from '../../../lib/auth';
+import { connectToDatabase } from '../../../lib/db';
 
 // configuration de base pour l'authentification
 export default NextAuth({
@@ -19,7 +21,7 @@ export default NextAuth({
     jwt: true // activer la gestion des sessions JWT (JSON Web Token)
   },
   providers: [
-    Providers.Credentials({
+    CredentialsProviders({
       // on utilise credentials lorsqu'on veut laisser NextAuth creer notre formulaire d'authentification
       // credentials: {
       //   email: { label: "Email", type: "email" },
