@@ -96,5 +96,3 @@ export default function AuthForm() {
     </section>
   );
 }
-
-// export default AuthForm;
